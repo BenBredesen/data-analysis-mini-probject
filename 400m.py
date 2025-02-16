@@ -7,7 +7,7 @@ data = pd.read_csv('data/results.csv')
 
 
 
-fig, ax = plt.subplots()
+fig, (ax1,ax2) = plt.subplots(2)
 
 def plotEvent(data,event,gender,medal):
 
@@ -26,12 +26,22 @@ def plotEvent(data,event,gender,medal):
 
 
 x,y = plotEvent(data,'400M','Men','G')
-ax.plot(x,y,label='Gold',c='#FFD700')
+ax1.plot(x,y,label='Gold',c='#FFD700')
 x,y = plotEvent(data,'400M','Men','S')
-ax.plot(x,y,label='Silver',c='#C0C0C0')
+ax1.plot(x,y,label='Silver',c='#C0C0C0')
 x,y = plotEvent(data,'400M','Men','B')
-ax.plot(x,y,label='Bronze',c='#CD7F32')
+ax1.plot(x,y,label='Bronze',c='#CD7F32')
 
-ax.set(title='Men\'s 400m')
-ax.legend()
+x,y = plotEvent(data,'400M','Women','G')
+ax2.plot(x,y,label='Gold',c='#FFD700')
+x,y = plotEvent(data,'400M','Women','S')
+ax2.plot(x,y,label='Silver',c='#C0C0C0')
+x,y = plotEvent(data,'400M','Women','B')
+ax2.plot(x,y,label='Bronze',c='#CD7F32')
+
+ax1.set(title='Men\'s 400m',ylabel='Time (s)')
+ax1.legend()
+ax2.set(title='Women\'s 400m',ylabel='Time (s)')
+ax2.legend()
+fig.tight_layout()
 plt.show()
