@@ -2,13 +2,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-print('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n')
-data = pd.read_csv('data/results.csv')
-
-
-
-fig, (ax1,ax2) = plt.subplots(2)
-
 def plotEvent(data,event,gender,medal):
 
     thisData = data[data['Event']==event+' '+gender]
@@ -37,24 +30,34 @@ def plotEvent(data,event,gender,medal):
                 y[i] = totalTime
     return x,y
 
+print('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n')
+data = pd.read_csv('data/results.csv')
 
-x,y = plotEvent(data,'Marathon','Men','G')
-ax1.plot(x,y,label='Gold',c='#FFD700')
-x,y = plotEvent(data,'Marathon','Men','S')
-ax1.plot(x,y,label='Silver',c='#C0C0C0')
-x,y = plotEvent(data,'Marathon','Men','B')
-ax1.plot(x,y,label='Bronze',c='#CD7F32')
+numPlots = int(input('How many events would you like to view: '))
 
-x,y = plotEvent(data,'Marathon','Women','G')
-ax2.plot(x,y,label='Gold',c='#FFD700')
-x,y = plotEvent(data,'Marathon','Women','S')
-ax2.plot(x,y,label='Silver',c='#C0C0C0')
-x,y = plotEvent(data,'Marathon','Women','B')
-ax2.plot(x,y,label='Bronze',c='#CD7F32')
+fig, axs = plt.subplots(numPlots)
+if numPlots==1:
+    axs = [axs]
 
-ax1.set(title='Men\'s Marathon',ylabel='Time (s)')
-ax1.legend()
-ax2.set(title='Women\'s Marathon',ylabel='Time (s)')
-ax2.legend()
+for i in range(numPlots):
+    print('\n')
+    event = input("Which event would you like to view: ")
+    gender = input("Which gender of the "+event+" would you like to view? Enter 'M' or 'W': ")
+    if gender=='M':
+        gender = 'Men'
+    else:
+        gender = 'Women'
+    x,y = plotEvent(data,event,gender,'G')
+    axs[i].plot(x,y,label='Gold',c='#FFD700')
+    x,y = plotEvent(data,event,gender,'S')
+    axs[i].plot(x,y,label='Silver',c='#C0C0C0')
+    x,y = plotEvent(data,event,gender,'B')
+    axs[i].plot(x,y,label='Bronze',c='#CD7F32')
+
+    axs[i].set(title=f'{gender}\'s {event.lower()}',ylabel='Time (s)')
+    axs[i].legend()
+    axs[i].grid()
+
+plt.grid()
 fig.tight_layout()
 plt.show()
