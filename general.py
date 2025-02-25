@@ -42,7 +42,7 @@ if numPlots==1:
 for i in range(numPlots):
     print('\n')
     event = input("Which event would you like to view: ")
-    gender = input("Which gender of the "+event+" would you like to view? Enter 'M' or 'W': ")
+    gender = input("Which gender of the "+event+" would you like to view? Enter 'M' or 'W': ")[0].upper()
     if gender=='M':
         gender = 'Men'
     else:
@@ -54,10 +54,9 @@ for i in range(numPlots):
     x,y = plotEvent(data,event,gender,'B')
     axs[i].plot(x,y,label='Bronze',c='#CD7F32')
 
-    axs[i].set(title=f'{gender}\'s {event.lower()}',ylabel='Time (s)')
+    axs[i].set(title=(f'{gender}\'s {event.title()}'),ylabel='Time (s)')
     axs[i].legend()
     axs[i].grid()
 
-plt.grid()
 fig.tight_layout()
 plt.show()
